@@ -75,6 +75,24 @@ def execute_python_code(
         return f"Error: {e!s}"
 
 
+@mcp.tool()
+def add(a: float, b: float) -> float:
+    """Adds two numbers and returns the sum."""
+    return a + b
+
+
+@mcp.tool()
+def multiply(a: float, b: float) -> float:
+    """Multiplies two numbers and returns the product."""
+    return a * b
+
+
+@mcp.tool()
+def power(base: float, exponent: float) -> float:
+    """Raises base to the power of exponent and returns the result."""
+    return base**exponent
+
+
 if __name__ == "__main__":
     # Security settings that allow local development are passed when the server starts
     mcp.run(
