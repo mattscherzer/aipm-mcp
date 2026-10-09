@@ -175,3 +175,13 @@ scripts/
 .vscode/
 .venv2/
 
+.venv/
+.uv/
+*.pyo
+*.pyd
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+.DS_Store
+Thumbs.db
+.env.*
+!.env.example

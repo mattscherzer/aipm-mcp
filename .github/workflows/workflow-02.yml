@@ -15,7 +15,7 @@ on:
   #   branches:
   #     - main
     # paths:
-    #   - requirements.txt
+    #   - pyproject.toml
 
 jobs:
   
@@ -23,8 +23,8 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ ubuntu-22.04, ubuntu-20.04] 
-        python-version: [3.11.3] 
+        os: [ ubuntu-22.04, ubuntu-24.04] 
+        python-version: [3.13] 
 
 ## The actions
     steps:
@@ -43,23 +43,20 @@ jobs:
           ./.github/workflows/REGX_test_import_libraries.sh
           echo  "<<<<<<< Create import libraries from the Notebook run successfully  >>>>>>"
 
+      - name: Install uv
+        uses: astral-sh/setup-uv@v10.2.0
+
       - name:  Install dependencies 
         run: |
-          python --version
-          python -m venv .venv
-          source .venv/bin/activate
-          python -m pip install --upgrade pip
-          pip list
-          pip install -r requirements.txt
+          uv --version
+          uv sync
           echo "<<<<<<< Install dependencies run successfully >>>>>>"
 
       - name:  Test the import libraries
         run: |
-          source .venv/bin/activate
-          ./.github/workflows/REGX_test_import_libraries.sh
+          uv run --with nbcommands bash ./.github/workflows/REGX_test_import_libraries.sh
           echo "<<<<<<< Test the dependencies in the import libraries from the Notebook >>>>>>"
-          pip install pytest
-          pytest ./.github/workflows/testing/test_import_libraries.py
+          uv run --with pytest pytest ./.github/workflows/testing/test_import_libraries.py
           echo  "<<<<<<< Test_under_ubuntuOS run successfully  >>>>>>"
 
 
@@ -67,8 +64,8 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [windows-2022, windows-2019]
-        python-version: [3.11.3]
+        os: [windows-2022, windows-2025]
+        python-version: [3.13]
 
     steps:
       - name: Checkout code
@@ -87,27 +84,23 @@ jobs:
           ./.github/workflows/REGX_test_import_libraries.sh
           echo  "<<<<<<< Create import libraries from the Notebook run successfully  >>>>>>"
 
+      - name: Install uv
+        uses: astral-sh/setup-uv@v10.2.0
+
       - name:  Install dependencies 
         shell: bash  
         run: |
-          echo "Note: This code is intended to run under the Bash CLI, not PowerShell."
-          python --version
-          python -m venv .venv
-          source .venv/Scripts/activate
-          python -m pip install --upgrade pip
-          pip list
-          pip install -r requirements.txt
+          uv --version
+          uv sync
           echo "<<<<<<< Install dependencies run successfully >>>>>>"
 
       - name:  Test the import libraries
         shell: bash  
         run: |
           echo "Note: This code is intended to run under the Bash CLI, not PowerShell."
-          source .venv/Scripts/activate
-          ./.github/workflows/REGX_test_import_libraries.sh
+          uv run --with nbcommands bash ./.github/workflows/REGX_test_import_libraries.sh
           echo "<<<<<<< Test the dependencies in the import libraries from the Notebook >>>>>>"
-          pip install pytest
-          pytest ./.github/workflows/testing/test_import_libraries.py
+          uv run --with pytest pytest ./.github/workflows/testing/test_import_libraries.py
           echo  "<<<<<<< Test_under_ubuntuOS run successfully  >>>>>>"
 
       
@@ -116,8 +109,8 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [macos-latest,macos-13]
-        python-version: [3.11.3] 
+        os: [macos-latest, macos-15-intel]
+        python-version: [3.13] 
 
     steps:
       - name: Checkout code
@@ -135,23 +128,20 @@ jobs:
             ./.github/workflows/REGX_test_import_libraries.sh
             echo  "<<<<<<< Create import libraries from the Notebook run successfully  >>>>>>"
 
+      - name: Install uv
+        uses: astral-sh/setup-uv@v10.2.0
+
       - name:  Install dependencies 
         run: |
-          python --version
-          python -m venv .venv
-          source .venv/bin/activate
-          python -m pip install --upgrade pip
-          pip list
-          pip install -r requirements.txt
+          uv --version
+          uv sync
           echo "<<<<<<< Install dependencies run successfully >>>>>>"
 
       - name:  Test the import libraries
         run: |
-          source .venv/bin/activate
-          ./.github/workflows/REGX_test_import_libraries.sh
+          uv run --with nbcommands bash ./.github/workflows/REGX_test_import_libraries.sh
           echo "<<<<<<< Test the dependencies in the import libraries from the Notebook >>>>>>"
-          pip install pytest
-          pytest ./.github/workflows/testing/test_import_libraries.py
+          uv run --with pytest pytest ./.github/workflows/testing/test_import_libraries.py
           echo  "<<<<<<< Test_under_ubuntuOS run successfully  >>>>>>"
           
 
@@ -161,7 +151,7 @@ jobs:
     strategy:
       matrix:
         os: [macos-14] #[flyci-macos-large-latest-m1,flyci-macos-large-latest-m2] # Price on FlyC (https://github.com/apps/flyci-prod) (https://github.com/actions/runner-images)
-        python-version: [3.11.3]
+        python-version: [3.13]
 
     steps:
       - name: Checkout code
@@ -179,21 +169,18 @@ jobs:
             ./.github/workflows/REGX_test_import_libraries.sh 
             echo  "<<<<<<< Create import libraries from the Notebook run successfully  >>>>>>"
 
+      - name: Install uv
+        uses: astral-sh/setup-uv@v10.2.0
+
       - name:  Install dependencies 
         run: |
-          python --version
-          python -m venv .venv
-          source .venv/bin/activate
-          python -m pip install --upgrade pip
-          pip list
-          pip install -r requirements.txt
+          uv --version
+          uv sync
           echo "<<<<<<< Install dependencies run successfully >>>>>>"
 
       - name:  Test the import libraries
         run: |
-          source .venv/bin/activate
-          ./.github/workflows/REGX_test_import_libraries.sh
+          uv run --with nbcommands bash ./.github/workflows/REGX_test_import_libraries.sh
           echo "<<<<<<< Test the dependencies in the import libraries from the Notebook >>>>>>"
-          pip install pytest
-          pytest ./.github/workflows/testing/test_import_libraries.py
+          uv run --with pytest pytest ./.github/workflows/testing/test_import_libraries.py
           echo  "<<<<<<< Test_under_ubuntuOS run successfully  >>>>>>"
